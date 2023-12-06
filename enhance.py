@@ -1,26 +1,23 @@
 import cv2
-import numpy as np
 
-def enhance_image(image_path, output_path):
+def sharpen_and_bw(image_path, output_path):
     # Read the image
     img = cv2.imread(image_path)
 
     # Apply Laplacian filter for sharpening
     sharpened = cv2.Laplacian(img, cv2.CV_64F)
-    sharpened = np.uint8(np.absolute(sharpened))
+    sharpened = cv2.convertScaleAbs(sharpened)
 
-    # Adjust brightness and contrast using histogram equalization
-    hsv = cv2.cvtColor(sharpened, cv2.COLOR_BGR2HSV)
-    hsv[:,:,2] = cv2.equalizeHist(hsv[:,:,2])
-    enhanced_img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+    # Convert the image to black and white (grayscale)
+    bw_image = cv2.cvtColor(sharpened, cv2.COLOR_BGR2GRAY)
 
-    # Save the enhanced image
-    cv2.imwrite(output_path, enhanced_img)
+    # Save the sharpened and black-and-white image
+    cv2.imwrite(output_path, bw_image)
 
 if __name__ == "__main__":
-    # Replace 'input_image.jpg' and 'enhanced_image.jpg' with your file paths
+    # Replace 'input_image.jpg' and 'output_image.jpg' with your file paths
     input_image_path = 'input_image.jpg'
-    output_image_path = 'enhanced_image.jpg'
+    output_image_path = 'output_image.jpg'
 
-    enhance_image(input_image_path, output_image_path)
-    print(f"Image processing completed. Enhanced image saved to {output_image_path}")
+    sharpen_and_bw(input_image_path, output_image_path)
+    print(f"Image processing completed. Sharpened and black-and-white image saved to {output_image_path}")
