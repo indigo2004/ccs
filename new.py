@@ -1,7 +1,7 @@
 import time
 import picamera
 
-def capture_high_quality_image(output_path='high_quality_image.jpg', resolution=(3280, 2464)):
+def capture_high_quality_image(output_path='high_quality_image.jpg', resolution=(1920, 1080)):
     try:
         with picamera.PiCamera() as camera:
             # Set the camera resolution to the maximum supported resolution
